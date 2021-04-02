@@ -1,0 +1,50 @@
+<<<<<<< HEAD
+---
+apiVersion: v1
+kind: ReplicationController
+metadata: 
+  name: openmrs-rc
+  labels: 
+    app: openmrs
+    version: 2.4
+spec:
+  replicas: 2
+  selector:
+     app: openmrs
+     version: 2.4
+  Template: 
+    metadata:
+      labels:
+    spec:
+      containers:
+        - name: openmrs
+          image: shaikkhajaibrahim/openmrs-core:2.4.0
+      ports:
+        - containerPort: 8080
+          protocol: TCP 
+=======
+---
+apiVersion: v1
+kind: ReplicationController
+metadata: 
+  name: openmrs-rc
+  labels: 
+    app: openmrs
+    version: 2.4
+spec:
+  replicas: 2
+  selector:
+     app: openmrs
+     version: 2.4
+  Template: 
+    metadata:
+      labels:
+    spec:
+      containers:
+        - name: openmrs
+          image: shaikkhajaibrahim/openmrs-core:2.4.0
+      ports:
+        - containerPort: 8080
+          protocol: TCP 
+>>>>>>> 1faeaae778ff098ff6446d92f8b59f9e9e534434
+ 
