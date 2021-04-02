@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: openmrs
+  label: 
+    app: openmrs
+    version: 2.0
+spec:
+  containers:
+    - name: openmrs
+      image: 
+      ports:
+        - containerPort: 8080
+          protocol: TCP 

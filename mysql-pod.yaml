@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql
+  label: 
+    app: db
+    version: 5.0
+spec:
+  containers: 
+    - name: mysql 
+      image: mysql:5.6 
+      ports:
+        - containerPort: 3306
+          protocol: TCP 
+      env: 
+        -name: MYSQL_ROOT_PASSWORD
+         value: password
+        -name: MYSQL_DATABASE
+         value: openmrs
+        -name: MYSQL_USER
+         value: billa
+        -name: MYSQL_PASSWORD
+         value: billa
