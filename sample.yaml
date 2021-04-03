@@ -1,0 +1,66 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azure-managed-disk
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: default
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deploy
+spec:
+  minReadySeconds: 10
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.6
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysqlvolume
+		  env:
+			- name: MYSQL_DATABASE
+			  value: 'openmrs'
+			- name: MYSQL_USER
+			  value: 'directdevops'
+			- name: MYSQL_PASSWORD
+			  value: 'directdevops'
+			- name: MYSQL_ROOT_PASSWORD
+			  value: 'password'
+      volumes:
+        - name: mysqlvolume
+          persistentVolumeClaim:
+            claimName: azure-managed-disk
+
+
+spec
+  containers
+    env
+    image
+    imagePullPolicy
+    name
+    ports
+      name
+      containerPort
+  - volumeMounts
+      name
+      mountPath
+  volumes
+
