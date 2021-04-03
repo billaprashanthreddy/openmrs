@@ -1,24 +1,39 @@
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: mysql
-  label: 
-    app: db
-    version: 5.0
+  name: mysql-deploy
 spec:
-  containers: 
-    - name: mysql 
-      image: mysql:5.6 
-      ports:
-        - containerPort: 3306
-          protocol: TCP 
-      env: 
-        -name: MYSQL_ROOT_PASSWORD
-         value: password
-        -name: MYSQL_DATABASE
-         value: openmrs
-        -name: MYSQL_USER
-         value: billa
-        -name: MYSQL_PASSWORD
-         value: billa 
+  minReadySeconds: 10
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.6
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_DATABASE
+              value: 'openmrs'
+            - name: MYSQL_USER
+              value: 'directdevops'
+            - name: MYSQL_PASSWORD
+              value: 'directdevops'
+            - name: MYSQL_ROOT_PASSWORD
+              value: 'password'
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: aws-pv            
+      volumes:
+        - name: aws-pv
+          persistentVolumeClaim:
+            claimName: aws-pvc
+
