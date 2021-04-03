@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openmrssvc
+  namespace: default
+spec:
+  selector:
+    app: openmrs
+    ver: 2.4.0
+  type: LoadBalancer
+  loadBalancerIP: 34.219.148.210
+  loadBalancerSourceRanges:
+    - 0.0.0.0/0
+  ports:
+  - name: openmrssvc
+    nodePort: 30000
+    port: 8081
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqlsvc
+  namespace: default
+spec:
+  selector:
+    app: mysql
+  type: ClusterIP
+  ports:
+  - name: mysqlsvc
+    port: 3306
+    targetPort: 3306
+
+
